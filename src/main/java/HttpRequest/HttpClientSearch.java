@@ -9,18 +9,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class HttpClientSearch extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private JComboBox database;
     private JTextField animal;
     private JTextField common_name;
     private JButton btnNewButton;
@@ -64,7 +59,7 @@ public class HttpClientSearch extends JFrame {
 
         JLabel lblPassword = new JLabel("Common Name");
         lblPassword.setFont(new Font("Roboto", Font.PLAIN, 20));
-        lblPassword.setBounds(542, 245, 124, 36);
+        lblPassword.setBounds(542, 245, 150, 36);
         contentPane.add(lblPassword);
 
         common_name = new JTextField();
@@ -72,6 +67,14 @@ public class HttpClientSearch extends JFrame {
         common_name.setBounds(707, 235, 228, 50);
         contentPane.add(common_name);
         common_name.setColumns(10);
+
+        database = new JComboBox();
+        database.addItem("Choose a Database...");
+        database.addItem("Postgres");
+        database.addItem("MongoDb");
+        database.addItem("Both");
+        database.setBounds(400, 400, 200, 60);
+        contentPane.add(database);
 
         btnNewButton = new JButton("Search");
         btnNewButton.addActionListener(new ActionListener() {
