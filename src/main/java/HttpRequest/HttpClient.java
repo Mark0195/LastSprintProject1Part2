@@ -40,7 +40,7 @@ public class HttpClient extends JFrame implements ActionListener {
         submit.addActionListener(this);
         add(panel, BorderLayout.CENTER);
         setTitle("Please Login Here !");
-        setSize(450,350);
+        setSize(450,200);
         setVisible(true);
     }
     public static void main(String[] args) {
