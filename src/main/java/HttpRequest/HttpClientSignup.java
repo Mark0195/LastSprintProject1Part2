@@ -41,43 +41,47 @@ public class HttpClientSignup extends JFrame {
             setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\User\\Desktop\\STDM.jpg"));
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setBounds(450, 190, 1014, 597);
-            setResizable(false);
+            setResizable(true);
             contentPane = new JPanel();
             contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
             setContentPane(contentPane);
             contentPane.setLayout(null);
 
-            JLabel lblNewUserRegister = new JLabel("New User Register");
-            lblNewUserRegister.setFont(new Font("Times New Roman", Font.PLAIN, 42));
-            lblNewUserRegister.setBounds(362, 52, 325, 50);
+            JLabel lblNewUserRegister = new JLabel("New User Registration Form");
+            lblNewUserRegister.setFont(new Font("Roboto", Font.PLAIN, 30));
+            lblNewUserRegister.setBounds(362, 50, 450, 50);
             contentPane.add(lblNewUserRegister);
 
             JLabel lblEmailAddress = new JLabel("Email\r\n address");
-            lblEmailAddress.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            lblEmailAddress.setBounds(58, 324, 124, 36);
+            lblEmailAddress.setFont(new Font("Roboto", Font.PLAIN, 20));
+            lblEmailAddress.setBounds(65, 245, 180, 36);
             contentPane.add(lblEmailAddress);
 
             email = new JTextField();
 
-            email.setFont(new Font("Tahoma", Font.PLAIN, 32));
-            email.setBounds(214, 320, 228, 50);
+            email.setFont(new Font("Roboto", Font.PLAIN, 32));
+            email.setBounds(214, 235, 228, 50);
             contentPane.add(email);
             email.setColumns(10);
 
             JLabel lblPassword = new JLabel("Password");
-            lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            lblPassword.setBounds(542, 245, 99, 24);
+            lblPassword.setFont(new Font("Roboto", Font.PLAIN, 20));
+            lblPassword.setBounds(542, 245, 124, 36);
             contentPane.add(lblPassword);
 
             passwordField = new JPasswordField();
-            passwordField.setFont(new Font("Tahoma", Font.PLAIN, 32));
+            passwordField.setFont(new Font("Roboto", Font.PLAIN, 32));
             passwordField.setBounds(707, 235, 228, 50);
             contentPane.add(passwordField);
 
-//            btnNewButton = new JButton("Register");
-//            btnNewButton.addActionListener(new ActionListener() {
-//
-//            }
+            btnNewButton = new JButton("Register");
+            btnNewButton.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
 //                public void actionPerformed(ActionEvent e) {
 //                    String emailId = email.getText();
 //                    String password = passwordField.getText();
@@ -107,8 +111,8 @@ public class HttpClientSignup extends JFrame {
 //                    }
 //                }
 //            });
-//            btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
-//            btnNewButton.setBounds(399, 447, 259, 74);
-//            contentPane.add(btnNewButton);
+           btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+            btnNewButton.setBounds(399, 447, 259, 74);
+            contentPane.add(btnNewButton);
 //        }
 }}
