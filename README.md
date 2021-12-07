@@ -1,2 +1,2 @@
 # LastSprintProject1Part2
-frontend/client portion of are final project
+frontend/client portion of our final project
