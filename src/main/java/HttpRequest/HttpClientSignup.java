@@ -73,44 +73,32 @@ public class HttpClientSignup extends JFrame {
             contentPane.add(passwordField);
 
             btnNewButton = new JButton("Register");
-            btnNewButton.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-//                public void actionPerformed(ActionEvent e) {
-//                    String emailId = email.getText();
-//                    String password = passwordField.getText();
-//                    String msg = "";
-//                    msg += " \n";
-//                    if ( != 10) {
-//                        JOptionPane.showMessageDialog(btnNewButton, "Enter a valid mobile number");
-//                    }
-//
-//                    try {
-//                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/swing_demo", "root", "root");
-//
-//                        String query = "INSERT INTO account values('" +  "','" +  "','" +  "','" +
-//                                password + "','" + emailId + "','" +  "')";
-//
-//                        Statement sta = connection.createStatement();
-//                        int x = sta.executeUpdate(query);
-//                        if (x == 0) {
-//                            JOptionPane.showMessageDialog(btnNewButton, "This is alredy exist");
-//                        } else {
-//                            JOptionPane.showMessageDialog(btnNewButton,
-//                                    "Welcome, " + msg + "Your account is sucessfully created");
-//                        }
-//                        connection.close();
-//                    } catch (Exception exception) {
-//                        exception.printStackTrace();
-//                    }
-//                }
-//            });
-           btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+            btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
             btnNewButton.setBounds(399, 447, 259, 74);
             contentPane.add(btnNewButton);
-//        }
+            btnNewButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String emailid = email.getText();
+                    String password = passwordField.getText();
+                    String msg = "";
+                    msg += " \n";
+                    try {
+                        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/animals", "postgres", "password");
+
+                        String query = "INSERT INTO passwordtable(email, password) values('emailed', 'password')";
+
+                        Statement sta = connection.createStatement();
+                        int x = sta.executeUpdate(query);
+                        if (x == 0) {
+                            JOptionPane.showMessageDialog(btnNewButton, "This user already exist, try again!");
+                        } else {
+                            JOptionPane.showMessageDialog(btnNewButton,
+                                    "Welcome, " + msg + "Your account is sucessfully created");
+                        }
+                        connection.close();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }});
 }}

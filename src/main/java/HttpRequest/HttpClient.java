@@ -8,7 +8,7 @@ public class HttpClient extends JFrame implements ActionListener {
     JLabel user_label, password_label, signup_label, message;
     JTextField userName_text;
     JPasswordField password_text;
-    JButton submit, signup, cancel;
+    JButton submit, signup;
     HttpClient() {
         // Username Label
         user_label = new JLabel();
@@ -36,7 +36,6 @@ public class HttpClient extends JFrame implements ActionListener {
         panel.add(signup_label);
         panel.add(signup);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Adding the listeners to components..
         submit.addActionListener(this);
         add(panel, BorderLayout.CENTER);
         setTitle("Please Login Here !");
@@ -55,5 +54,6 @@ public class HttpClient extends JFrame implements ActionListener {
         } else {
             message.setText(" Invalid user.. ");
         }
+
     }
 }
