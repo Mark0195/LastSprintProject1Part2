@@ -71,7 +71,7 @@ public class HttpClientSearch extends JFrame {
         database = new JComboBox();
         database.addItem("Choose a Database...");
         database.addItem("Postgres");
-        database.addItem("MongoDb");
+        database.addItem("MySql");
         database.addItem("Both");
         database.setBounds(400, 400, 200, 60);
         contentPane.add(database);
@@ -102,10 +102,10 @@ public class HttpClientSearch extends JFrame {
 //                        Statement sta = connection.createStatement();
 //                        int x = sta.executeUpdate(query);
 //                        if (x == 0) {
-//                            JOptionPane.showMessageDialog(btnNewButton, "This is alredy exist");
+//                            JOptionPane.showMessageDialog(btnNewButton, "This is already exist");
 //                        } else {
 //                            JOptionPane.showMessageDialog(btnNewButton,
-//                                    "Welcome, " + msg + "Your account is sucessfully created");
+//                                    "Welcome, " + msg + "Your account is successfully created");
 //                        }
 //                        connection.close();
 //                    } catch (Exception exception) {

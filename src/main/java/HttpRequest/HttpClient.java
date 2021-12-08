@@ -38,7 +38,7 @@ public class HttpClient extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         submit.addActionListener(this);
         add(panel, BorderLayout.CENTER);
-        setTitle("Please Login Here !");
+        setTitle("Please Login Here!");
         setSize(450,200);
         setVisible(true);
     }
@@ -55,5 +55,45 @@ public class HttpClient extends JFrame implements ActionListener {
             message.setText(" Invalid user.. ");
         }
 
+    }
+
+    {Frame1 obj1=new Frame1();}
+}
+
+class Frame1 extends JFrame implements ActionListener
+{
+    JButton b=new JButton("New Frame");
+
+    public Frame1()
+    {
+        setVisible(true);
+        setSize(250,400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        add(b);
+
+        b.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent ae)
+    {
+        Frame2 obj2=new Frame2();
+        //dispose();
+    }
+}
+
+
+class Frame2 extends JFrame
+{
+    public Frame2()
+    {
+        setVisible(true);
+        setSize(250,400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        JLabel l1=new JLabel("Welcome To New Frame");
+        add(l1);
     }
 }

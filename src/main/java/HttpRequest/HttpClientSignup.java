@@ -94,7 +94,7 @@ public class HttpClientSignup extends JFrame {
                             JOptionPane.showMessageDialog(btnNewButton, "This user already exist, try again!");
                         } else {
                             JOptionPane.showMessageDialog(btnNewButton,
-                                    "Welcome, " + msg + "Your account is sucessfully created");
+                                    "Welcome, " + msg + "Your account is successfully created");
                         }
                         connection.close();
                     } catch (Exception exception) {
