@@ -1,13 +1,16 @@
 package HttpRequest;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Scanner;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,6 +23,8 @@ import javax.swing.border.EmptyBorder;
 
 public class HttpClientSignup extends JFrame {
     private static final long serialVersionUID = 1L;
+    private static Scanner scanner;
+    private static int msg;
     private JPanel contentPane;
     private JTextField email;
     private JPasswordField passwordField;
@@ -37,68 +42,70 @@ public class HttpClientSignup extends JFrame {
             }
         });
     }
-        public HttpClientSignup() {
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setBounds(450, 190, 1014, 597);
-            setResizable(true);
-            contentPane = new JPanel();
-            contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-            setContentPane(contentPane);
-            contentPane.setLayout(null);
 
-            JLabel lblNewUserRegister = new JLabel("New User Registration Form");
-            lblNewUserRegister.setFont(new Font("Roboto", Font.PLAIN, 30));
-            lblNewUserRegister.setBounds(362, 50, 450, 50);
-            contentPane.add(lblNewUserRegister);
+    public HttpClientSignup() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(450, 190, 1014, 597);
+        setResizable(true);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-            JLabel lblEmailAddress = new JLabel("Email\r\n address");
-            lblEmailAddress.setFont(new Font("Roboto", Font.PLAIN, 20));
-            lblEmailAddress.setBounds(65, 245, 180, 36);
-            contentPane.add(lblEmailAddress);
+        JLabel lblNewUserRegister = new JLabel("New User Registration Form");
+        lblNewUserRegister.setFont(new Font("Roboto", Font.PLAIN, 30));
+        lblNewUserRegister.setBounds(362, 50, 450, 50);
+        contentPane.add(lblNewUserRegister);
 
-            email = new JTextField();
-            email.setFont(new Font("Roboto", Font.PLAIN, 32));
-            email.setBounds(214, 235, 228, 50);
-            contentPane.add(email);
-            email.setColumns(10);
+        JLabel lblEmailAddress = new JLabel("Email\r\n address");
+        lblEmailAddress.setFont(new Font("Roboto", Font.PLAIN, 20));
+        lblEmailAddress.setBounds(65, 245, 180, 36);
+        contentPane.add(lblEmailAddress);
 
-            JLabel lblPassword = new JLabel("Password");
-            lblPassword.setFont(new Font("Roboto", Font.PLAIN, 20));
-            lblPassword.setBounds(542, 245, 124, 36);
-            contentPane.add(lblPassword);
+        email = new JTextField();
+        email.setFont(new Font("Roboto", Font.PLAIN, 32));
+        email.setBounds(214, 235, 228, 50);
+        contentPane.add(email);
+        email.setColumns(10);
 
-            passwordField = new JPasswordField();
-            passwordField.setFont(new Font("Roboto", Font.PLAIN, 32));
-            passwordField.setBounds(707, 235, 228, 50);
-            contentPane.add(passwordField);
+        JLabel lblPassword = new JLabel("Password");
+        lblPassword.setFont(new Font("Roboto", Font.PLAIN, 20));
+        lblPassword.setBounds(542, 245, 124, 36);
+        contentPane.add(lblPassword);
 
-            btnNewButton = new JButton("Register");
-            btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
-            btnNewButton.setBounds(399, 447, 259, 74);
-            contentPane.add(btnNewButton);
-            btnNewButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String emailid = email.getText();
-                    String password = passwordField.getText();
-                    String msg = "";
-                    msg += " \n";
-                    try {
-                        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/animals", "postgres", "password");
+        passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Roboto", Font.PLAIN, 32));
+        passwordField.setBounds(707, 235, 228, 50);
+        contentPane.add(passwordField);
 
-                        String query = "INSERT INTO passwordtable(email, password) values('emailed', 'password')";
+        btnNewButton = new JButton("Register");
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        btnNewButton.setBounds(399, 447, 259, 74);
+        contentPane.add(btnNewButton);
+        btnNewButton.addActionListener(new ActionListener() {
 
-                        Statement sta = connection.createStatement();
-                        int x = sta.executeUpdate(query);
-                        if (x == 0) {
-                            JOptionPane.showMessageDialog(btnNewButton, "This user already exist, try again!");
-                        } else {
-                            JOptionPane.showMessageDialog(btnNewButton,
-                                    "Welcome, " + msg + "Your account is successfully created");
-                        }
-                        connection.close();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String emailId = email.getText();
+                String passwordId = passwordField.getText();
+                java.net.http.HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:/5432/animals/passwordtable/" + emailId + "/" + passwordId))
+                        .header("Content-Type", "application/json")
+                        .GET()
+                        .build();
+                try {
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    if (response.statusCode() == 200) {
+                        JOptionPane.showMessageDialog(btnNewButton, "This user already exist, try again!");
+                    } else {
+                        JOptionPane.showMessageDialog(btnNewButton,
+                                "Welcome, " + emailId + "Your account is successfully created");
                     }
-                }});
-}}
+                } catch (IOException | InterruptedException ea) {
+                    ea.printStackTrace();
+                }
+            }
+        });
+    }
+}
