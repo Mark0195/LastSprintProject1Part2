@@ -110,6 +110,6 @@ public class HttpClientSearch extends JFrame {
         });
 
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
-        btnNewButton.setBounds(399, 447, 259, 74);
+        btnNewButton.setBounds(399, 475, 200, 40);
         contentPane.add(btnNewButton);
     }}
