@@ -90,7 +90,7 @@ public class HttpClientSignup extends JFrame {
                 String passwordId = passwordField.getText();
                 java.net.http.HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:/5432/animals/passwordtable/" + emailId + "/" + passwordId))
+                        .uri(URI.create("http://localhost:/8080/animals/passwordtable/" + emailId + "/" + passwordId))
                         .header("Content-Type", "application/json")
                         .GET()
                         .build();

@@ -5,6 +5,11 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -81,40 +86,30 @@ public class HttpClientSearch extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String common_nameId = common_name.getText();
+                String animalId = animal.getText();
+                java.net.http.HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create("http://localhost:/8080/animals/" + common_nameId))
+                        .uri(URI.create("http://localhost:/8080/animals/" + animalId))
+                        .header("Content-Type", "application/json")
+                        .GET()
+                        .build();
+                try {
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    if (response.statusCode() == 200) {
+                        JOptionPane.showMessageDialog(btnNewButton, "No Animal found!");
+                    } else {
+                        JOptionPane.showMessageDialog(btnNewButton,
+                                 common_nameId + " " + animalId);
+                    }
+                } catch (IOException | InterruptedException ea) {
+                    ea.printStackTrace();
+                }
             }
         });
-//                public void actionPerformed(ActionEvent e) {
-//                    String emailId = email.getText();
-//                    String password = passwordField.getText();
-//                    String msg = "";
-//                    msg += " \n";
-//                    if ( != 10) {
-//                        JOptionPane.showMessageDialog(btnNewButton, "Enter a valid mobile number");
-//                    }
-//
-//                    try {
-//                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/swing_demo", "root", "root");
-//
-//                        String query = "INSERT INTO account values('" +  "','" +  "','" +  "','" +
-//                                password + "','" + emailId + "','" +  "')";
-//
-//                        Statement sta = connection.createStatement();
-//                        int x = sta.executeUpdate(query);
-//                        if (x == 0) {
-//                            JOptionPane.showMessageDialog(btnNewButton, "This is already exist");
-//                        } else {
-//                            JOptionPane.showMessageDialog(btnNewButton,
-//                                    "Welcome, " + msg + "Your account is successfully created");
-//                        }
-//                        connection.close();
-//                    } catch (Exception exception) {
-//                        exception.printStackTrace();
-//                    }
-//                }
-//            });
+
         btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 22));
         btnNewButton.setBounds(399, 447, 259, 74);
         contentPane.add(btnNewButton);
-//        }
     }}

@@ -2,6 +2,10 @@ package HttpRequest;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import javax.swing.*;
 public class HttpClient extends JFrame implements ActionListener {
     JPanel panel;
@@ -46,54 +50,26 @@ public class HttpClient extends JFrame implements ActionListener {
         new HttpClient();
     }
     @Override
-    public void actionPerformed(ActionEvent ae) {
-        String userName = userName_text.getText();
-        String password = password_text.getText();
-        if (userName.trim().equals("admin") && password.trim().equals("admin")) {
-            message.setText(" Hello " + userName + "");
-        } else {
-            message.setText(" Invalid user.. ");
+    public void actionPerformed(ActionEvent e) {
+        String emailId = userName_text.getText();
+        String passwordId = password_text.getText();
+        java.net.http.HttpClient client = java.net.http.HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:/8080/animals/passwordtable/" + emailId + "/" + passwordId))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                JOptionPane.showMessageDialog(submit, "Username/Password Don't match");
+            } else {
+                JOptionPane.showMessageDialog(submit,
+                        "Welcome, " + emailId);
+            }
+        } catch (IOException | InterruptedException ea) {
+            ea.printStackTrace();
         }
-
-    }
-
-    {Frame1 obj1=new Frame1();}
-}
-
-class Frame1 extends JFrame implements ActionListener
-{
-    JButton b=new JButton("New Frame");
-
-    public Frame1()
-    {
-        setVisible(true);
-        setSize(250,400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
-
-        add(b);
-
-        b.addActionListener(this);
-    }
-
-    public void actionPerformed(ActionEvent ae)
-    {
-        Frame2 obj2=new Frame2();
-        //dispose();
     }
 }
 
-
-class Frame2 extends JFrame
-{
-    public Frame2()
-    {
-        setVisible(true);
-        setSize(250,400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
-
-        JLabel l1=new JLabel("Welcome To New Frame");
-        add(l1);
-    }
-}
