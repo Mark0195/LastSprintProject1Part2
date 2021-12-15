@@ -2,12 +2,14 @@ package HttpRequest;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class HttpClientSignup extends JFrame {
+    private static Scanner scanner;
+    private static int msg;
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField email;
@@ -79,26 +83,27 @@ public class HttpClientSignup extends JFrame {
             btnNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String emailid = email.getText();
-                    String password = passwordField.getText();
-                    String msg = "";
-                    msg += " \n";
+                    String emailId = email.getText();
+                    String passwordId = passwordField.getText();
+
+                    java.net.http.HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(URI.create("http://localhost:/5432/animals/passwordtable/" + emailId + "/" + passwordId))
+                            .header("Content-Type", "application/json")
+                            .GET()
+                            .build();
                     try {
-                        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/animals", "postgres", "password");
-
-                        String query = "INSERT INTO passwordtable(email, password) values('emailed', 'password')";
-
-                        Statement sta = connection.createStatement();
-                        int x = sta.executeUpdate(query);
-                        if (x == 0) {
+                        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                        if (response.statusCode() == 200) {
                             JOptionPane.showMessageDialog(btnNewButton, "This user already exist, try again!");
                         } else {
                             JOptionPane.showMessageDialog(btnNewButton,
-                                    "Welcome, " + msg + "Your account is successfully created");
-                        }
-                        connection.close();
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }});
-}}
+                                   "Welcome, " + emailId + "Your account is successfully created");
+                       }
+
+                    } catch (IOException | InterruptedException ea) {
+                        ea.printStackTrace();
+                    }}
+            });
+    }
+}
