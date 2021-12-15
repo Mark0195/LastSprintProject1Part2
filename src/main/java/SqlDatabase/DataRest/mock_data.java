@@ -10,6 +10,17 @@ public class mock_data {
     private String animals;
     private String commonName;
 
+    public mock_data() {
+
+    }
+
+    public mock_data(long id, String animals, String common_name) {
+        this.id = id;
+        this.animals = animals;
+        this.commonName = common_name;
+    }
+
+
     public long getId() {
         return id;
     }
